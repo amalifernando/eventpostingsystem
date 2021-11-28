@@ -184,7 +184,7 @@ public class EventManagerImplTest {
         when(userRepository.findById(eventRequest.getUserId())).thenReturn(java.util.Optional.of(user));
         Response response = eventManagerImpl.saveEvent(eventRequest);
         Class<?> eventClass = response.getObject().getClass();
-        Field field = eventClass.getField("eventCode");
+        Field field = eventClass.getField("status");
         Object eventCodeValue = field.get(response);
         Assertions.assertThat(response.getObject());
     }
