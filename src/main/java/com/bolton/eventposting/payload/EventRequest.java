@@ -1,66 +1,27 @@
-package com.bolton.eventposting.model;
+package com.bolton.eventposting.payload;
 
-import com.bolton.eventposting.enums.EventStatus;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Entity
-public class Event {
+public class EventRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventId;
-
-   // @Column(nullable = false)
     private String eventCode;
-
-   @Column(nullable = false)
     private String eventName;
-
-    @Column(nullable = false)
     private LocalDate eventStartDate;
-
     private LocalDate eventEndDate;
-
-    @Column(nullable = false)
     private Long startTime;
-
-    @Column(nullable = false)
     private Long endTime;
-
-    @Column(nullable = false)
     private String addressLine1;
-
     private String addressLine2;
-
-    @Column(nullable = false)
     private String city;
-
-    @Column(nullable = false)
     private String postcode;
-
     private String eventDescription;
-
-    @Column(nullable = false)
     private String email;
-
-    @Column(nullable = false)
     private String contactNumber;
+    private Long userId;
 
-    @Enumerated(value = EnumType.STRING)
-    private EventStatus status;
-
-    @OneToOne
-    @JoinColumn(name="userId", nullable = false)
-    private User userId;
-
-    public Event() {
-    }
-
-    public Event(String eventCode, String eventName, LocalDate eventStartDate, LocalDate eventEndDate, Long startTime, Long endTime, String addressLine1, String addressLine2, String city, String postcode, String eventDescription, String email, String contactNumber, EventStatus status, User userId) {
-        this.eventCode = eventCode;
+    public EventRequest(String eventName, LocalDate eventStartDate, LocalDate eventEndDate, Long startTime, Long endTime, String addressLine1, String addressLine2, String city, String postcode, String eventDescription, String email, String contactNumber, Long userId) {
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
@@ -73,7 +34,6 @@ public class Event {
         this.eventDescription = eventDescription;
         this.email = email;
         this.contactNumber = contactNumber;
-        this.status = status;
         this.userId = userId;
     }
 
@@ -189,40 +149,11 @@ public class Event {
         this.contactNumber = contactNumber;
     }
 
-    public EventStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(EventStatus status) {
-        this.status = status;
-    }
-
-    public User getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Event{");
-        sb.append("eventId=").append(eventId);
-        sb.append(", eventCode='").append(eventCode).append('\'');
-        sb.append(", eventName='").append(eventName).append('\'');
-        sb.append(", eventStartDate=").append(eventStartDate);
-        sb.append(", eventEndDate=").append(eventEndDate);
-        sb.append(", startTime=").append(startTime);
-        sb.append(", endTime=").append(endTime);
-        sb.append(", addressLine1='").append(addressLine1).append('\'');
-        sb.append(", addressLine2='").append(addressLine2).append('\'');
-        sb.append(", city='").append(city).append('\'');
-        sb.append(", postcode='").append(postcode).append('\'');
-        sb.append(", eventDescription='").append(eventDescription).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", contactNumber='").append(contactNumber).append('\'');
-        sb.append('}');
-        return sb.toString();
     }
 }
