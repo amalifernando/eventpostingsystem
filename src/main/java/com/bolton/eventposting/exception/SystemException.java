@@ -1,7 +1,5 @@
 package com.bolton.eventposting.exception;
 
-import com.bolton.eventposting.enums.CommonStatus;
-
 public class SystemException extends RuntimeException{
 
     private String status;
@@ -13,7 +11,6 @@ public class SystemException extends RuntimeException{
     }
 
     public SystemException(String code, String message, String messageDescription) {
-       // this.status = CommonStatus.FAIL;
         this.code = code;
         this.message = message;
         this.messageDescription = messageDescription;
