@@ -4,7 +4,6 @@ import com.bolton.eventposting.enums.EventStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Event {
@@ -13,7 +12,7 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventId;
 
-   // @Column(nullable = false)
+    @Column(nullable = false)
     private String eventCode;
 
    @Column(nullable = false)
@@ -60,6 +59,25 @@ public class Event {
     }
 
     public Event(String eventCode, String eventName, LocalDate eventStartDate, LocalDate eventEndDate, Long startTime, Long endTime, String addressLine1, String addressLine2, String city, String postcode, String eventDescription, String email, String contactNumber, EventStatus status, User userId) {
+        this.eventCode = eventCode;
+        this.eventName = eventName;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.city = city;
+        this.postcode = postcode;
+        this.eventDescription = eventDescription;
+        this.email = email;
+        this.contactNumber = contactNumber;
+        this.status = status;
+        this.userId = userId;
+    }
+
+    public Event(Long eventId, String eventCode, String eventName, LocalDate eventStartDate, LocalDate eventEndDate, Long startTime, Long endTime, String addressLine1, String addressLine2, String city, String postcode, String eventDescription, String email, String contactNumber, EventStatus status, User userId) {
+        this.eventId = eventId;
         this.eventCode = eventCode;
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
