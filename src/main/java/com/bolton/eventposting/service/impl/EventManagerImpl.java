@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class EventManagerImpl implements EventManager {
@@ -89,5 +90,11 @@ public class EventManagerImpl implements EventManager {
         }
 
         return response;
+    }
+
+
+    @Override
+    public List<Event> getEventList(String searchQuery){
+        return null;
     }
 }
