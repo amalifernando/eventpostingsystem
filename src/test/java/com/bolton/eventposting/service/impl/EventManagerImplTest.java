@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -211,11 +213,86 @@ public class EventManagerImplTest {
         when(eventRepository.save(Mockito.any(Event.class))).thenReturn(event);
         Response response = eventManagerImpl.saveEvent(eventRequest);
 
+        Mockito.verify(eventRepository, Mockito.times(1)).save(ArgumentMatchers.any(Event.class));
+
         Object eventClass = response.getObject();
         Field field = eventClass.getClass().getDeclaredField("status");
         field.setAccessible(true);
         String eventStatus = field.get(eventClass).toString();
         Assertions.assertThat(eventStatus).isNotNull();
         assertEquals(EventStatus.NEW.toString(),eventStatus);
+    }
+
+    @Test
+    public void testGetEventListByEventName(){
+        List<Event> eventList = new ArrayList<>();
+        User user = new User(1L,"David", "Smith", "davidmith@gmail.com", "david@123", "0756784344");
+
+        Event event1 = new Event(1L, "1_1234567", "Art Exhibition", LocalDate.parse("2021-12-15"), LocalDate.parse("2021-12-16"),
+                32400000L, 57600000L,"9, Derby Street", "", "Bolton", "BL3 5HY","Entrance is free.","davidmith@gmail.com", "0756784344",
+                EventStatus.NEW, user);
+
+        eventList.add(event1);
+
+        when(eventRepository.getEventList("Art")).thenReturn(eventList);
+        List<Event> result = eventManagerImpl.getEventList("Art");
+
+        Mockito.verify(eventRepository, Mockito.times(1)).getEventList("Art");
+
+        assertEquals(1, result.size());
+        assertEquals("Art Exhibition", result.get(0).getEventName());
+    }
+
+    @Test
+    public void testGetEventListByCity(){
+        List<Event> eventList = new ArrayList<>();
+        User user = new User(1L,"David", "Smith", "davidmith@gmail.com", "david@123", "0756784344");
+
+        Event event1 = new Event(1L, "1_1234567", "Art Exhibition", LocalDate.parse("2021-12-15"), LocalDate.parse("2021-12-16"),
+                32400000L, 57600000L,"9, Derby Street", "", "Bolton", "BL3 5HY","Entrance is free.","davidmith@gmail.com", "0756784344",
+                EventStatus.NEW, user);
+
+        eventList.add(event1);
+
+        when(eventRepository.getEventList("Bolton")).thenReturn(eventList);
+        List<Event> result = eventManagerImpl.getEventList("Bolton");
+
+        Mockito.verify(eventRepository, Mockito.times(1)).getEventList("Bolton");
+
+        assertEquals(1, result.size());
+        assertEquals("Bolton", result.get(0).getCity());
+    }
+
+
+    @Test
+    public void testGetEventListNoSearchQuery(){
+        List<Event> eventList = new ArrayList<>();
+        User user = new User(1L,"David", "Smith", "davidmith@gmail.com", "david@123", "0756784344");
+
+        Event event1 = new Event(1L, "1_1234567", "Art Exhibition", LocalDate.parse("2021-12-15"), LocalDate.parse("2021-12-16"),
+                32400000L, 57600000L,"9, Derby Street", "", "Bolton", "BL3 5HY","Entrance is free.","davidmith@gmail.com", "0756784344",
+                EventStatus.NEW, user);
+
+        Event event2 = new Event(2L, "1_1234568", "Food Festival", LocalDate.parse("2021-12-20"), LocalDate.parse("2021-12-22"),
+                32400000L, 57600000L,"9, Derby Street", "", "Bolton", "BL3 5HY","Entrance is free.","davidmith@gmail.com", "0756784344",
+                EventStatus.NEW, user);
+
+        eventList.add(event1);
+        eventList.add(event2);
+
+        when(eventRepository.getEventList("")).thenReturn(eventList);
+        List<Event> result = eventManagerImpl.getEventList("");
+
+        Mockito.verify(eventRepository, Mockito.times(1)).getEventList("");
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    public void testGetEventListForNoData(){
+        List<Event> eventList = new ArrayList<>();
+        when(eventRepository.getEventList("Manchester")).thenReturn(eventList);
+        List<Event> result = eventManagerImpl.getEventList("Manchester");
+        Mockito.verify(eventRepository, Mockito.times(1)).getEventList("Manchester");
+        assertEquals(0, result.size());
     }
 }
