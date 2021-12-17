@@ -37,6 +37,7 @@ public class EventController {
         try{
             List<Event> eventList = eventManager.getEventList(searchQuery);
             response.setObject(eventList);
+            response.setStatus(RequestStatus.SUCCESS.name());
         }catch(SystemException ex){
             response.setStatus(RequestStatus.FAIL.name());
             response.setMessage(ex.getMessage());
