@@ -1,7 +1,6 @@
 package com.bolton.eventposting.payload;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class EventRequest {
 

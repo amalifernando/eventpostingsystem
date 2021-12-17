@@ -13,6 +13,7 @@ import com.bolton.eventposting.service.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -95,6 +96,9 @@ public class EventManagerImpl implements EventManager {
 
     @Override
     public List<Event> getEventList(String searchQuery){
-        return null;
+
+        List<Event> eventList = new ArrayList<>();
+        eventList = eventRepository.getEventList(searchQuery);
+        return eventList;
     }
 }
