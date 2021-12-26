@@ -39,7 +39,7 @@ public class EventController {
             response.setObject(eventList);
             response.setStatus(RequestStatus.SUCCESS.name());
         }catch(SystemException ex){
-            System.out.println("test jenkins");
+            System.out.println("test jenkins in CI");
             response.setStatus(RequestStatus.FAIL.name());
             response.setMessage(ex.getMessage());
             response.setResponseCode(ex.getCode());
