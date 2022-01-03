@@ -39,12 +39,35 @@ public class EventController {
             response.setObject(eventList);
             response.setStatus(RequestStatus.SUCCESS.name());
         }catch(SystemException ex){
-            System.out.println("test jenkins in CI Pipeline");
             response.setStatus(RequestStatus.FAIL.name());
-            response.setMessage(ex.getMessage());
+            response.setMessage("Error in retrieving data.");
             response.setResponseCode(ex.getCode());
         }
 
+        return response;
+    }
+
+    @DeleteMapping("/delete")
+    public Response deleteEvent(@RequestParam Long eventId){
+        Response response = new Response();
+        try{
+            response = eventManager.deleteEvent(eventId);
+        }catch(SystemException ex){
+            response.setStatus(RequestStatus.FAIL.name());
+            response.setMessage("Error in deleting event details.");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public Response updateEvent(@RequestBody EventRequest eventRequest){
+        Response response = new Response();
+        try{
+            response = eventManager.updateEvent(eventRequest);
+        }catch(SystemException ex){
+            response.setStatus(RequestStatus.FAIL.name());
+            response.setMessage("Error in updating event details.");
+        }
         return response;
     }
 }
