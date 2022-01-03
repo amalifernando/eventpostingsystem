@@ -295,4 +295,34 @@ public class EventManagerImplTest {
         Mockito.verify(eventRepository, Mockito.times(1)).getEventList("Manchester");
         assertEquals(0, result.size());
     }
+
+
+    @Test
+    public void testDeleteEventWithNullEventId(){
+        Throwable exception = assertThrows(SystemException.class, () -> {
+            Long eventId = null;
+            eventManagerImpl.deleteEvent(eventId);
+        });
+        assertEquals("Event id is required.", exception.getMessage());
+    }
+
+    @Test
+    public void testDeleteNullEvent(){
+        Throwable exception = assertThrows(SystemException.class, () -> {
+            eventManagerImpl.deleteEvent(1L);
+        });
+        assertEquals("No such event is found to delete.", exception.getMessage());
+    }
+
+    @Test
+    public void testDeleteEvent(){
+        User user = new User(1L,"David", "Smith", "davidmith@gmail.com", "david@123", "0756784344");
+        Event event = new Event(1L, "1_1234567", "Art Exhibition", LocalDate.parse("2021-12-15"), LocalDate.parse("2021-12-16"),
+                32400000L, 57600000L,"9, Derby Street", "", "Bolton", "BL3 5HY","Entrance is free.","davidmith@gmail.com", "0756784344",
+                EventStatus.NEW, user);
+        when(eventRepository.getById(1L)).thenReturn(event);
+        Response response = eventManagerImpl.deleteEvent(1L);
+        assertEquals("Event has been deleted successfully.", response.getMessage());
+    }
+
 }

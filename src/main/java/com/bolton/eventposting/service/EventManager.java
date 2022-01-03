@@ -11,4 +11,8 @@ public interface EventManager {
     Response saveEvent(EventRequest eventRequest);
 
     List<Event> getEventList(String searchQuery);
+
+    Response deleteEvent(Long eventId);
+
+    Response updateEvent(EventRequest eventRequest);
 }

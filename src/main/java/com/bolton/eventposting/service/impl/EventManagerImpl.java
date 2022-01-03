@@ -13,6 +13,7 @@ import com.bolton.eventposting.service.EventManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,5 +101,42 @@ public class EventManagerImpl implements EventManager {
         List<Event> eventList = new ArrayList<>();
         eventList = eventRepository.getEventList(searchQuery);
         return eventList;
+    }
+
+    @Override
+    public Response deleteEvent(Long eventId) {
+        Response response = new Response();
+        if(eventId == null){
+            throw new SystemException("1012", "Event id is required.");
+        }
+
+        Event event = eventRepository.getById(eventId);
+        if(event == null){
+            throw new SystemException("1013", "No such event is found to delete.");
+        }
+        eventRepository.delete(event);
+        response.setMessage("Event has been deleted successfully.");
+        response.setStatus(RequestStatus.SUCCESS.name());
+        return response;
+    }
+
+    @Override
+    public Response updateEvent(EventRequest eventRequest) {
+        Response response = new Response();
+        try {
+            User user = userRepository.getById(eventRequest.getUserId());
+            Event event = new Event(eventRequest.getEventId(),eventRequest.getEventCode(), eventRequest.getEventName(), eventRequest.getEventStartDate(),
+                    eventRequest.getEventEndDate(), eventRequest.getStartTime(), eventRequest.getEndTime(),
+                    eventRequest.getAddressLine1(), eventRequest.getAddressLine2(), eventRequest.getCity(),
+                    eventRequest.getPostcode(),
+                    eventRequest.getEventDescription(), eventRequest.getEmail(), eventRequest.getContactNumber(),
+                    EventStatus.valueOf(eventRequest.getEventStatus()), user);
+
+            eventRepository.save(event);
+        }catch(SystemException ex){
+            response.setMessage("Error in updating event details.");
+            response.setStatus(RequestStatus.FAIL.name());
+        }
+        return response;
     }
 }

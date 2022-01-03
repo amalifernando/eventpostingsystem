@@ -19,6 +19,7 @@ public class EventRequest {
     private String email;
     private String contactNumber;
     private Long userId;
+    private String eventStatus;
 
     public EventRequest(String eventName, LocalDate eventStartDate, LocalDate eventEndDate, Long startTime, Long endTime, String addressLine1, String addressLine2, String city, String postcode, String eventDescription, String email, String contactNumber, Long userId) {
         this.eventName = eventName;
@@ -154,5 +155,13 @@ public class EventRequest {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getEventStatus() {
+        return eventStatus;
+    }
+
+    public void setEventStatus(String eventStatus) {
+        this.eventStatus = eventStatus;
     }
 }
