@@ -19,3 +19,10 @@
       pip:
         name: docker-py
         state: present
+    - name: Start the container
+      docker_container:
+        name: event-posting
+        image: "amalifernando/event-posting"
+        state: started
+        published_ports:
+          - 0.0.0.0:8080:8080
