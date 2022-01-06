@@ -40,7 +40,7 @@ public class EventController {
             response.setStatus(RequestStatus.SUCCESS.name());
         }catch(SystemException ex){
             response.setStatus(RequestStatus.FAIL.name());
-            response.setMessage("Error in retrieving data.");
+            response.setMessage("Error in data retrieving.");
             response.setResponseCode(ex.getCode());
         }
 
