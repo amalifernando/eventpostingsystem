@@ -2,7 +2,7 @@
 - hosts: dev
   become: True
   tasks:
-    - name: install python3-pip
+    - name: Install python pip
       yum:
         name: python-pip
         state: present
