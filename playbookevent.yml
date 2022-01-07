@@ -1,6 +1,9 @@
 ---
 - hosts: 172.31.32.17
-  become: True
+  become: yes
+  become_user: ec2-user
+  become_method: sudo
+  become_flags: '-i'
   tasks:
     - name: Install python pip
       yum:
