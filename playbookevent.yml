@@ -1,7 +1,7 @@
 ---
 - hosts: 172.31.32.17
   become: yes
-  become_user: ec2-user
+  become_user: ubuntu
   become_method: sudo
   become_flags: '-i'
   tasks:
