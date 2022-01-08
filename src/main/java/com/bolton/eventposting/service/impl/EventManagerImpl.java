@@ -69,7 +69,7 @@ public class EventManagerImpl implements EventManager {
             throw new SystemException("1009", "Email is required.");
         }
         try {
-            User user = userRepository.getById(eventRequest.getUserId());
+            User user = userRepository.findById(eventRequest.getUserId()).get();
             Date currentDate = new Date();
             String eventCode = user.getUserId().toString()+"_"+currentDate.getTime();
 
@@ -123,7 +123,7 @@ public class EventManagerImpl implements EventManager {
     public Response updateEvent(EventRequest eventRequest) {
         Response response = new Response();
         try {
-            User user = userRepository.getById(eventRequest.getUserId());
+            User user = userRepository.findById(eventRequest.getUserId()).get();
             Event event = new Event(eventRequest.getEventId(),eventRequest.getEventCode(), eventRequest.getEventName(), eventRequest.getEventStartDate(),
                     eventRequest.getEventEndDate(), eventRequest.getStartTime(), eventRequest.getEndTime(),
                     eventRequest.getAddressLine1(), eventRequest.getAddressLine2(), eventRequest.getCity(),
