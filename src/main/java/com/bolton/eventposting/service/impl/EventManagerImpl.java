@@ -69,7 +69,7 @@ public class EventManagerImpl implements EventManager {
             throw new SystemException("1009", "Email is required.");
         }
         try {
-            User user = userRepository.findById(eventRequest.getUserId()).get();
+            User user = userRepository.getById(eventRequest.getUserId());
             Date currentDate = new Date();
             String eventCode = user.getUserId().toString()+"_"+currentDate.getTime();
 
