@@ -1,11 +1,6 @@
 ---
 - hosts: 172.31.19.156
   become: yes
-  vars:
-    create_containers: 4
-    default_container_name: event-posting
-    default_container_image: amalifernando/event-posting
-    default_container_command: sleep 1d
   tasks:
     - name: Install aptitude using apt
       apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
@@ -32,14 +27,14 @@
         name: docker
 
     - name: Pull default Docker image
-        docker_image:
-          name: "{{ default_container_image }}"
-          source: pull
+      docker_image:
+        name: "amalifernando/event-posting"
+        source: pull
 
     - name: Create default containers
-        docker_container:
-          name: "{{ default_container_name }}{{ item }}"
-          image: "{{ default_container_image }}"
-          command: "{{ default_container_command }}"
-          state: present
-          with_sequence: count={{ create_containers }}
+      docker_container:
+        name: "amalifernando/event-posting"
+        image: "amalifernando/event-posting"
+        command: "sleep 1d"
+        state: present
+      with_sequence: count=4
