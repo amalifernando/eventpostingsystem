@@ -1,22 +1,16 @@
 ---
 - hosts: 172.31.32.17
   become: yes
-    become_user: ubuntu
-    become_method: sudo
-    become_flags: '-i'
-  vars:
-    create_containers: 4
-    default_container_name: docker
-    default_container_image: ubuntu
-    default_container_command: sleep 1d
-
+  become_user: ubuntu
+  become_method: sudo
+  become_flags: '-i'
   tasks:
     - name: Install aptitude using apt
       apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
 
     - name: Install required system packages
       apt: name={{ item }} state=latest update_cache=yes
-      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools' ]
 
     - name: Add Docker GPG apt Key
       apt_key:
@@ -34,10 +28,10 @@
     - name: Install Docker Module for Python
       pip:
         name: docker
-
+        
     - name: Start the container
-        docker_container:
-          name: event-posting
-          image: "amalifernando/event-posting"
-          state: started
-          published_ports: 8081
+      docker_container:
+        name: event-posting
+        image: "amalifernando/event-posting"
+        state: started
+        published_ports: 8081
