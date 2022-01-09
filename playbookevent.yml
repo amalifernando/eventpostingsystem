@@ -33,7 +33,7 @@
 
     - name: Create default containers
       docker_container:
-        name: "amalifernando/event-posting"
+        name: "docker"
         image: "amalifernando/event-posting"
         command: "sleep 1d"
         state: present
