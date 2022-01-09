@@ -5,6 +5,27 @@
   become_method: sudo
   become_flags: '-i'
   tasks:
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Allow 'wheel' group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+
+    - name: Add sudoers users to wheel group
+      user:
+        name=deployer
+        groups=wheel
+        append=yes
+        state=present
+        createhome=yes
+      
     - name: Install aptitude using apt
       apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
 
@@ -28,7 +49,7 @@
     - name: Install Docker Module for Python
       pip:
         name: docker
-        
+
     - name: Start the container
       docker_container:
         name: event-posting
