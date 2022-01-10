@@ -26,19 +26,6 @@
       pip:
         name: docker
 
-    - name: Pull default Docker image
-      docker_image:
-        name: "amalifernando/event-posting"
-        source: pull
-
-    - name: Create default containers
-      docker_container:
-        name: "docker"
-        image: "amalifernando/event-posting"
-        command: "sleep 1d"
-        state: present
-      with_sequence: count=4
-
     - name: Start the container
       docker_container:
         name: event-posting
