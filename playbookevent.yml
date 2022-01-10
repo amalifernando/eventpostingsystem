@@ -40,8 +40,8 @@
       with_sequence: count=4
 
     - name: Start the container
-        docker_container:
-          name: event-posting
-          image: "amalifernando/event-posting"
-          state: started
-          published_ports: 8081
+      docker_container:
+        name: event-posting
+        image: "amalifernando/event-posting"
+        state: started
+        published_ports: 8081
