@@ -31,4 +31,4 @@
         name: event-posting
         image: "amalifernando/event-posting"
         state: started
-        published_ports: 8081
+        published_ports: 8080
