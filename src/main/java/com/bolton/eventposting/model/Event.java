@@ -1,6 +1,7 @@
 package com.bolton.eventposting.model;
 
 import com.bolton.eventposting.enums.EventStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -53,6 +54,7 @@ public class Event {
 
     @OneToOne
     @JoinColumn(name="userId", nullable = false)
+    @JsonIgnore
     private User userId;
 
     public Event() {
